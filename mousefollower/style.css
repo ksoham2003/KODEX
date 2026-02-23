@@ -1,0 +1,9 @@
+.mouse {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.2s linear;
+    transform: translate(-50%, -50%);
+}
