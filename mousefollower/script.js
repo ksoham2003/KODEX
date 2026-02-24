@@ -1,7 +1,22 @@
+const mouseElement = document.querySelector(".mouse");
+
 document.addEventListener("mousemove", function (event) {
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
-    var mouseElement = document.querySelector(".mouse");
-    mouseElement.style.left = mouseX + "px";
-    mouseElement.style.top = mouseY + "px";
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+
+    // Viewport dimensions
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Define central area (40% to 60% of width and height)
+    const isInCentralX = mouseX > width * 0.4 && mouseX < width * 0.6;
+    const isInCentralY = mouseY > height * 0.4 && mouseY < height * 0.6;
+
+    if (isInCentralX && isInCentralY) {
+        mouseElement.classList.add("expanded");
+    } else {
+        mouseElement.classList.remove("expanded");
+        mouseElement.style.left = mouseX + "px";
+        mouseElement.style.top = mouseY + "px";
+    }
 });
