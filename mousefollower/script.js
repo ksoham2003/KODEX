@@ -4,11 +4,9 @@ document.addEventListener("mousemove", function (event) {
     const mouseX = event.clientX;
     const mouseY = event.clientY;
 
-    // Viewport dimensions
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // Define central area (40% to 60% of width and height)
     const isInCentralX = mouseX > width * 0.4 && mouseX < width * 0.6;
     const isInCentralY = mouseY > height * 0.4 && mouseY < height * 0.6;
 
