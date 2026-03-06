@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KODEX — Project Showcase</title>
+    <meta name="description"
+        content="A curated collection of frontend projects by ksoham2003. Explore interactive demos, tools, and experiments.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.07);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-muted: #55556a;
+            --accent-1: #6c5ce7;
+            --accent-2: #a29bfe;
+            --accent-3: #00cec9;
+            --glow: rgba(108, 92, 231, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.2), transparent 70%);
+            top: -200px;
+            right: -100px;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 206, 201, 0.15), transparent 70%);
+            bottom: -150px;
+            left: -100px;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        .bg-orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(162, 155, 254, 0.12), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float3 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(-50px, 60px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(30px, -40px) scale(0.95);
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(60px, -40px) scale(1.05);
+            }
+
+            66% {
+                transform: translate(-40px, 50px) scale(0.9);
+            }
+        }
+
+        @keyframes float3 {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        /* Noise texture overlay */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 70px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .header .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 4px 20px var(--glow);
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .header .tag-line {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            color: var(--accent-2);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Project grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px 28px 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.05), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px var(--glow);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover .card-arrow {
+            transform: translate(3px, -3px);
+            opacity: 1;
+        }
+
+        .project-card:hover .card-icon {
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px var(--glow);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .card-arrow {
+            color: var(--text-muted);
+            font-size: 18px;
+            transition: all 0.35s ease;
+            opacity: 0.4;
+            margin-top: 4px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Delay animations for cards */
+        .project-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .project-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .project-card:nth-child(4) {
+            animation-delay: 0.25s;
+        }
+
+        .project-card:nth-child(5) {
+            animation-delay: 0.3s;
+        }
+
+        .project-card:nth-child(6) {
+            animation-delay: 0.35s;
+        }
+
+        .project-card:nth-child(7) {
+            animation-delay: 0.4s;
+        }
+
+        .project-card:nth-child(8) {
+            animation-delay: 0.45s;
+        }
+
+        .project-card:nth-child(9) {
+            animation-delay: 0.5s;
+        }
+
+        .project-card:nth-child(10) {
+            animation-delay: 0.55s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Color themes for icons */
+        .theme-purple {
+            background: rgba(108, 92, 231, 0.15);
+            color: #a29bfe;
+        }
+
+        .theme-teal {
+            background: rgba(0, 206, 201, 0.15);
+            color: #00cec9;
+        }
+
+        .theme-pink {
+            background: rgba(253, 121, 168, 0.15);
+            color: #fd79a8;
+        }
+
+        .theme-orange {
+            background: rgba(255, 165, 2, 0.15);
+            color: #ffa502;
+        }
+
+        .theme-green {
+            background: rgba(0, 210, 122, 0.15);
+            color: #00d27a;
+        }
+
+        .theme-blue {
+            background: rgba(9, 132, 227, 0.15);
+            color: #74b9ff;
+        }
+
+        .theme-red {
+            background: rgba(214, 48, 49, 0.15);
+            color: #ff7675;
+        }
+
+        .theme-cyan {
+            background: rgba(0, 184, 212, 0.15);
+            color: #00e5ff;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .footer a {
+            color: var(--accent-2);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-3);
+        }
+
+        .footer .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+            margin: 16px auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .container {
+                padding: 40px 16px 60px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header p {
+                font-size: 0.95rem;
+            }
+
+            .header {
+                margin-bottom: 40px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .project-card {
+                padding: 22px 20px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background effects -->
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">K</div>
+            </div>
+            <h1>KODEX</h1>
+            <p>A curated collection of frontend projects &amp; experiments</p>
+            <span class="tag-line">by ksoham2003</span>
+        </header>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projects-grid">
+
+            <a href="https://ksoham2003.github.io/KODEX/Spotify/" class="project-card" id="project-spotify">
+                <div class="card-top">
+                    <div class="card-icon theme-green">🎵</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Spotify</div>
+                <div class="card-desc">A Spotify-inspired music player clone with playback controls, volume management,
+                    and a sleek dark UI.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/Digital_Piano/" class="project-card" id="project-digital-piano">
+                <div class="card-top">
+                    <div class="card-icon theme-purple">🎹</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Digital Piano</div>
+                <div class="card-desc">An interactive digital piano with keyboard support, multi-octave playback, and
+                    song recording features.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/interactive-gallery/" class="project-card" id="project-gallery">
+                <div class="card-top">
+                    <div class="card-icon theme-pink">🖼️</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Interactive Gallery</div>
+                <div class="card-desc">A dynamic image gallery with smooth animations and interactive browsing
+                    experience.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/BMI%20Calculator/" class="project-card" id="project-bmi">
+                <div class="card-top">
+                    <div class="card-icon theme-teal">⚖️</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">BMI Calculator</div>
+                <div class="card-desc">A clean body mass index calculator with real-time results and health category
+                    indicators.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/Nav-Hide/" class="project-card" id="project-nav-hide">
+                <div class="card-top">
+                    <div class="card-icon theme-orange">📌</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Nav Hide</div>
+                <div class="card-desc">A scroll-aware navigation bar that hides and reveals smoothly based on scroll
+                    direction.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/mousefollower/" class="project-card" id="project-mousefollower">
+                <div class="card-top">
+                    <div class="card-icon theme-cyan">🎯</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Mouse Follower</div>
+                <div class="card-desc">A creative cursor-following animation with smooth trailing effects and visual
+                    flair.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/querySelectorAll/" class="project-card"
+                id="project-queryselectorall">
+                <div class="card-top">
+                    <div class="card-icon theme-blue">📦</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">QuerySelectorAll</div>
+                <div class="card-desc">A DOM manipulation demo showcasing querySelectorAll with interactive element
+                    selection.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/DOM_Task/" class="project-card" id="project-dom-task">
+                <div class="card-top">
+                    <div class="card-icon theme-red">📝</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">DOM Task</div>
+                <div class="card-desc">DOM homework exercises featuring toggle interactions, event handling, and dynamic
+                    updates.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/Inventory_Management/" class="project-card"
+                id="project-inventory">
+                <div class="card-top">
+                    <div class="card-icon theme-orange">📊</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">Inventory Management</div>
+                <div class="card-desc">An inventory tracking tool with CRUD operations and organized data management.
+                </div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+            <a href="https://ksoham2003.github.io/KODEX/JSON_Data/" class="project-card" id="project-json-data">
+                <div class="card-top">
+                    <div class="card-icon theme-purple">🗂️</div>
+                    <span class="card-arrow">↗</span>
+                </div>
+                <div class="card-title">JSON Data</div>
+                <div class="card-desc">A JSON data viewer and manipulator for parsing, displaying, and working with
+                    structured data.</div>
+                <div class="card-tags">
+                    <span class="card-tag">HTML</span>
+                    <span class="card-tag">CSS</span>
+                    <span class="card-tag">JavaScript</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="divider"></div>
+            <p>Built with ☕ by <a href="https://github.com/ksoham2003" target="_blank" rel="noopener">ksoham2003</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
