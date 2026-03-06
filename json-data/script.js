@@ -91,10 +91,9 @@ var movie = [
     }
 ]
 
-var sum = '';
 
 movie.forEach(function(movieItem) {
-    sum += `
+    document.querySelector('.container').innerHTML += `
     <div class="movie-card">
         <img src="${movieItem.image}" alt="${movieItem.name}">
         <h2>${movieItem.name} (${movieItem.year})</h2>
@@ -105,5 +104,3 @@ movie.forEach(function(movieItem) {
     </div>
     `;
 });
-
-document.querySelector('.container').innerHTML = sum;

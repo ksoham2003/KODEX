@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventory Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>📦 Inventory Management</h1>
+
+  <!-- Form Card -->
+  <div class="card">
+    <h2>Add Product</h2>
+
+    <input type="hidden" id="productId">
+
+    <div class="form-group">
+      <input type="text" id="name" placeholder="Product Name">
+      <input type="number" id="price" placeholder="Price">
+      <input type="number" id="quantity" placeholder="Quantity">
+    </div>
+
+    <button class="primary-btn" onclick="saveProduct()">Save Product</button>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card">
+    <h2>Inventory List</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
